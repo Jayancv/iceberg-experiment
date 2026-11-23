@@ -1,0 +1,2 @@
+# Keep LF endings so files behave the same inside Linux containers when cloned on Windows
+* text=auto eol=lf
