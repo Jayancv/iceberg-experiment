@@ -65,9 +65,11 @@ services:
 
   # --- Object storage -------------------------------------------------------
   # MinIO stopped publishing community images in Oct 2025 (minio/minio is gone
-  # from Docker Hub). Chainguard publishes a free, maintained build.
+  # from Docker Hub). pgsty/minio is a community fork on Docker Hub; this is its
+  # final release under the "minio" name (later releases are pgsty/silo).
+  # Pinned so CI doesn't change underneath us.
   minio:
-    image: cgr.dev/chainguard/minio:latest
+    image: pgsty/minio:RELEASE.2026-08-04T00-00-00Z
     command: server /data --console-address ":9001"
     ports:
       - "9000:9000"   # S3 API

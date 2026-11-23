@@ -22,6 +22,14 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Pull images (retry on registry errors)
+        run: |
+          for i in 1 2 3 4 5; do
+            docker compose pull kafka minio rest && exit 0
+            echo "pull failed (attempt $i), retrying in $((i * 15))s..."
+            sleep $((i * 15))
+          done
+          exit 1
       - name: Start stack
         run: docker compose up -d --build --wait --wait-timeout 300 kafka minio rest
       - name: Start pipeline
